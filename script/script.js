@@ -30,8 +30,12 @@ window.SharedFunctions = {
         SharedData.categoryData.forEach(cat => {
             const mainDiv = document.createElement('div');
             mainDiv.className = 'main-category';
+            
+            // --- MODIFIED: Dynamic URL for dropdown categories ---
+            const categoryUrl = `category-products.html?category=${encodeURIComponent(cat.name)}`;
+            
             mainDiv.innerHTML = `
-                <a href="${cat.url}">
+                <a href="${categoryUrl}">
                     ${cat.name} <span class="arrow">›</span>
                 </a>
             `;
@@ -40,7 +44,7 @@ window.SharedFunctions = {
                 const sub = document.createElement('div');
                 sub.className = 'submenu';
                 cat.subs.forEach(s => {
-                    sub.innerHTML += `<a href="#">${s}</a>`;
+                    sub.innerHTML += `<a href="${categoryUrl}&sub=${encodeURIComponent(s)}">${s}</a>`;
                 });
                 mainDiv.appendChild(sub);
             }
@@ -90,7 +94,9 @@ function initCategories() {
     if (grid) {
         categoryData.forEach(cat => {
             const card = document.createElement('a');
-            card.href = cat.url;
+            // --- MODIFIED: Dynamic URL for category grid cards ---
+            card.href = `category-products.html?category=${encodeURIComponent(cat.name)}`;
+            // -----------------------------------------------------------
             card.className = 'category-card';
             card.innerHTML = `
                 <div class="category-img-circle">
