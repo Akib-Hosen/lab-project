@@ -7,11 +7,11 @@ function renderCategoryProducts(categoryName) {
     const grid = document.getElementById('category-product-grid');
     const title = document.getElementById('category-title');
 
-    if (!grid || !window.productData) 
-        return;
+    if (!grid || !window.productData) return;
 
-    if (!categoryName) {
+    if (!categoryName || categoryName.trim() === "") {
         title.textContent = "All Products";
+        categoryName = null;
     } else {
         title.textContent = decodeURIComponent(categoryName);
     }
@@ -19,13 +19,19 @@ function renderCategoryProducts(categoryName) {
     const allProducts = Object.values(window.productData);
 
     const filteredProducts = categoryName
-        ? allProducts.filter(product => product.category.toLowerCase() === categoryName.toLowerCase())
+        ? allProducts.filter(product =>
+            product.category &&
+            product.category.trim().toLowerCase() === categoryName.trim().toLowerCase()
+        )
         : allProducts;
 
     if (filteredProducts.length === 0) {
-        grid.innerHTML = "<p>No products found in this category.</p>";
+        grid.innerHTML = `<div class="empty-message">
+            <p>No products found in this category.</p>
+        </div>`;
         return;
     }
+
     grid.innerHTML = '';
 
     filteredProducts.forEach(product => {
@@ -44,8 +50,6 @@ function renderCategoryProducts(categoryName) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    
     const category = getCategoryFromUrl();
-    
     renderCategoryProducts(category);
 });

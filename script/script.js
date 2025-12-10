@@ -31,7 +31,6 @@ window.SharedFunctions = {
             const mainDiv = document.createElement('div');
             mainDiv.className = 'main-category';
             
-            // --- MODIFIED: Dynamic URL for dropdown categories ---
             const categoryUrl = `category-products.html?category=${encodeURIComponent(cat.name)}`;
             
             mainDiv.innerHTML = `
@@ -94,9 +93,7 @@ function initCategories() {
     if (grid) {
         categoryData.forEach(cat => {
             const card = document.createElement('a');
-            // --- MODIFIED: Dynamic URL for category grid cards ---
             card.href = `category-products.html?category=${encodeURIComponent(cat.name)}`;
-            // -----------------------------------------------------------
             card.className = 'category-card';
             card.innerHTML = `
                 <div class="category-img-circle">
@@ -115,7 +112,6 @@ function featuredProducts() {
     const grid = document.getElementById('product-grid');
     if (!grid || !window.productData) return;
 
-    // Convert object to array
     const products = Object.values(window.productData);
 
     products.forEach(product => {
